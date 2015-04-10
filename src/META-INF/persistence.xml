@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="LoveSportsORM">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>edu.neu.lovesports.orm.models.User</class> 
+		<class>edu.neu.lovesports.orm.models.Blog</class>
+		<class>edu.neu.lovesports.orm.models.Text</class>
+		<class>edu.neu.lovesports.orm.models.Subscription</class>
+		<class>edu.neu.lovesports.orm.models.Including</class>
+		<class>edu.neu.lovesports.orm.models.Img</class>
+		<class>edu.neu.lovesports.orm.models.Homepage</class>
+		<class>edu.neu.lovesports.orm.models.Category</class>
+		<class>edu.neu.lovesports.orm.models.Admin</class>
+		<class>edu.neu.lovesports.orm.models.BlogReference</class>
+		<class>edu.neu.lovesports.orm.models.Group</class>
+		<class>edu.neu.lovesports.orm.models.Comment</class>
+		<class>edu.neu.lovesports.orm.models.Stamp</class>
+		<class>edu.neu.lovesports.orm.models.Following</class>
+		<class>edu.neu.lovesports.orm.models.Collection</class> 
+		<properties>
+			<property name="eclipselink.jdbc.password" value="jiangwei" />
+			<property name="eclipselink.jdbc.user" value="root" />
+			<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/lovesports" />
+			<!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables" 
+				/> -->
+			<property name="eclipselink.logging.level" value="ALL" />
+		</properties>
+	</persistence-unit>
+</persistence>
