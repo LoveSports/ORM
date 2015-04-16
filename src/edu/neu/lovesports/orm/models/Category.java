@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Category {
@@ -29,13 +30,35 @@ public class Category {
 	private User editor;
 	
 	@OneToMany(mappedBy = "category")
-	private List<Subscription> subs;
+	private List<Subscription> subscriptions;
 	
 	@OneToMany(mappedBy = "category")
 	private List<BlogReference> blogRefs;
 	
 	@OneToMany(mappedBy = "category")
 	private List<Img> Imgs;
+
+	@OneToMany(mappedBy = "host")
+	private List<Including> subs;
+	
+	@OneToOne(mappedBy = "sub")
+	private Including host;
+	
+	public List<Including> getSubs() {
+		return subs;
+	}
+
+	public void setSubs(List<Including> subs) {
+		this.subs = subs;
+	}
+
+	public Including getHost() {
+		return host;
+	}
+
+	public void setHost(Including host) {
+		this.host = host;
+	}
 
 	public Integer getId() {
 		return id;
@@ -77,12 +100,12 @@ public class Category {
 		this.editor = editor;
 	}
 
-	public List<Subscription> getSubs() {
-		return subs;
+	public List<Subscription> getSubscriptions() {
+		return subscriptions;
 	}
 
-	public void setSubs(List<Subscription> subs) {
-		this.subs = subs;
+	public void setSubscriptions(List<Subscription> subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 
 	public List<BlogReference> getBlogRefs() {

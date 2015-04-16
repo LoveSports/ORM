@@ -37,6 +37,9 @@ public class Blog {
 	private List<Img> Imgs;
 	
 	@OneToMany(mappedBy = "blog")
+	private List<Stamp> stamps;
+	
+	@OneToMany(mappedBy = "blog")
 	private List<Collection> collections;
 	
 	public Integer getId() {
@@ -111,6 +114,14 @@ public class Blog {
 		this.collections = collections;
 	}
 
+	public List<Stamp> getStamps() {
+		return stamps;
+	}
+
+	public void setStamps(List<Stamp> stamps) {
+		this.stamps = stamps;
+	}
+
 	public Blog(Integer id, String title, User user, Group group) {
 		super();
 		this.id = id;
@@ -122,6 +133,4 @@ public class Blog {
 	public Blog() {
 		super();
 	}
-	
-
 }

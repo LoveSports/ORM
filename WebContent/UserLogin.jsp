@@ -8,37 +8,35 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div>
+		<form action="UserLogin.jsp">
 
-	<h3>User Login</h3>
+			Account: <input name="username" type="text" />
+			Password:<input name="password" type="password" />
+			<button type="submit" name="action" value="login">Log In</button>
+			<button name="action" value="signup">Sign Up</button>
+			<%
+				UserLog check = new UserLog();
+				String action = request.getParameter("action");
+				String username = request.getParameter("username");
+				String password = request.getParameter("password");
 
-	<form action="UserLogin.jsp">
-
-		Account: <input name="username" type="text" /><br /> <br />
-		Password:<input name="password" type="password" /><br /> <br />
-		<button type="submit" name="action" value="login">Log In</button>
-		<button name="action" value="signup">Sign Up</button>
-		<%
-			UserLog check = new UserLog();
-			String action = request.getParameter("action");
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-
-			if (action != null) {
-				if ("signup".equals(action))
-					response.sendRedirect("/LOVESPORTS/UserSignUp.jsp");
-				if ("login".equals(action)
-						&& (username == "" || password == ""))
-					out.println("Please enter account and password.");
-				else {
-					if (check.Login(request, response, username, password)) {
-						response.sendRedirect("/LoveSportsORM/UserHomepage.jsp?username="
-								+ username);
-					} else
-						out.println("Username and Password are not matched.");
+				if (action != null) {
+					if ("signup".equals(action))
+						response.sendRedirect("/LOVESPORTS/UserSignUp.jsp");
+					if ("login".equals(action)
+							&& (username == "" || password == ""))
+						out.println("Please enter account and password.");
+					else {
+						if (check.Login(request, response, username, password)) {
+							response.sendRedirect("/LoveSportsORM/UserHomepage.jsp?username="
+									+ username);
+						} else
+							out.println("Username and Password are not matched.");
+					}
 				}
-			}
-		%>
-	</form>
-
+			%>
+		</form>
+	</div>
 </body>
 </html>

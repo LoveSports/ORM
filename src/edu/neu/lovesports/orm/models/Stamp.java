@@ -2,43 +2,23 @@ package edu.neu.lovesports.orm.models;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@IdClass(StampId.class)
 public class Stamp {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String stamp;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "username")
 	private User user;
 	
+	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "blogId")
 	private Blog blog;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getStamp() {
-		return stamp;
-	}
-
-	public void setStamp(String stamp) {
-		this.stamp = stamp;
-	}
 
 	public User getUser() {
 		return user;
@@ -56,10 +36,8 @@ public class Stamp {
 		this.blog = blog;
 	}
 
-	public Stamp(Integer id, String stamp, User user, Blog blog) {
+	public Stamp(Blog blog, User user) {
 		super();
-		this.id = id;
-		this.stamp = stamp;
 		this.user = user;
 		this.blog = blog;
 	}

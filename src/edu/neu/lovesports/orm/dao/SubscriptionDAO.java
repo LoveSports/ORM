@@ -1,14 +1,11 @@
 package edu.neu.lovesports.orm.dao;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-
 import edu.neu.lovesports.orm.models.Category;
 import edu.neu.lovesports.orm.models.Subscription;
+import edu.neu.lovesports.orm.models.SubscriptionId;
 import edu.neu.lovesports.orm.models.User;
 
 public class SubscriptionDAO {
@@ -18,45 +15,22 @@ public class SubscriptionDAO {
 
 	// crud
 	// create
-	public Subscription create(Subscription sub) {
+	public Subscription create(User user, Category category) {
+		Subscription sub = new Subscription(user, category);
 		em.getTransaction().begin();
 		em.persist(sub);
 		em.getTransaction().commit();
 		return sub;
 	}
 
-	// read
-	public Subscription read(int id){
-		return em.find(Subscription.class, id);
-	}
-
-	// readAll
-	@SuppressWarnings("unchecked")
-	public List<Subscription> readAll() {
-		Query query = em
-				.createQuery("select subscription from Subscription subscription");
-		return (List<Subscription>) query.getResultList();
-	}
-
-	// update
-	public Subscription update(Subscription sub) {
-
-		em.getTransaction().begin();
-		em.merge(sub);
-		em.getTransaction().commit();
-		return sub;
-	}
-
 	// delete
 	public void delete(User user, Category category) {
-		Query query = em.createQuery("select sub from Subscription sub where sub.user = :user and sub.category = :category");
-		query.setParameter("user", user);
-		query.setParameter("category", category);
-		@SuppressWarnings("unchecked")
-		List<Subscription> subs = (List<Subscription>)query.getResultList();
+		String username = user.getUsername();
+		int categoryId = category.getId();
+		SubscriptionId id = new SubscriptionId(username, categoryId);
+		Subscription sub = em.find(Subscription.class, id);
 		em.getTransaction().begin();
-		for (Subscription sub : subs)
-			em.remove(sub);
+		em.remove(sub);
 		em.getTransaction().commit();
 	}
 

@@ -11,10 +11,11 @@ public class User {
 	@Id
 	private String username;
 	private String password;
+	private String nickname;
 	private String firstName;
 	private String lastName;
 	private String email;
-
+	
 	@OneToMany(mappedBy = "editor")
 	private List<Category> categories;
 	
@@ -51,6 +52,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -107,11 +114,24 @@ public class User {
 	public void setCollections(List<Collection> collections) {
 		this.collections = collections;
 	}
-	public User(String username, String password, String firstName,
+	public List<Following> getFollowees() {
+		return followees;
+	}
+	public void setFollowees(List<Following> followees) {
+		this.followees = followees;
+	}
+	public List<Following> getFollowers() {
+		return followers;
+	}
+	public void setFollowers(List<Following> followers) {
+		this.followers = followers;
+	}
+	public User(String username, String password, String nickname, String firstName,
 			String lastName, String email) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.nickname = nickname;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

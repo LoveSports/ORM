@@ -1,13 +1,13 @@
 package edu.neu.lovesports.orm.dao;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
+import edu.neu.lovesports.orm.models.Blog;
 import edu.neu.lovesports.orm.models.Stamp;
+import edu.neu.lovesports.orm.models.StampId;
+import edu.neu.lovesports.orm.models.User;
 
 public class StampDAO {
 	
@@ -16,37 +16,21 @@ public class StampDAO {
 	
 	//crud
 	//create
-	public Stamp create(Stamp stamp){
+	public Stamp create(Blog blog, User user){
+		Stamp stamp = new Stamp(blog, user);
 		em.getTransaction().begin();
 		em.persist(stamp);
 		em.getTransaction().commit();
 		return stamp;
 	}
 	
-	//read
-	public Stamp read(int id){
-		return em.find(Stamp.class, id);
-	}
-	
-	//read
-	@SuppressWarnings("unchecked")
-	public List<Stamp> readAll(){
-		Query query = em.createQuery("select stamp from Stamp stamp");
-		return (List<Stamp>)query.getResultList();
-	}
-	
-	//update
-	public Stamp update(Stamp stamp){
-		em.getTransaction().begin();
-		em.merge(stamp);
-		em.getTransaction().commit();
-		return stamp;
-	}
-	
 	//delete
-	public void delete(int id){
-		em.getTransaction().begin();
+	public void delete(Blog blog, User user){
+		int blogId = blog.getId();
+		String username = user.getUsername();
+		StampId id = new StampId(blogId, username);
 		Stamp stamp = em.find(Stamp.class, id);
+		em.getTransaction().begin();
 		em.remove(stamp);
 		em.getTransaction().commit();
 	}
