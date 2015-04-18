@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import edu.neu.lovesports.orm.models.Following;
 import edu.neu.lovesports.orm.models.User;
 
 public class UserDAO {
@@ -25,7 +26,10 @@ public class UserDAO {
 	
 	//readUserById
 	public User read(String username){
-		return em.find(User.class, username);
+		User user = em.find(User.class, username);
+		if (user == null) return null;
+		em.refresh(user);
+		return user;
 	}
 	
 	//readAllUser
@@ -51,4 +55,19 @@ public class UserDAO {
 		em.getTransaction().commit();
 	}
 	
+	public static void main(String arg[])
+	{
+		UserDAO dao = new UserDAO();
+		User david = dao.read("david@qq.com");
+		User bob = dao.read("bob@gmail.com");
+		User alice = dao.read("alice@gmail.com");
+		
+//		Following flw = new Following(david, bob);
+		
+		List<Following> followings = alice.getFollowers();
+		for (Following f : followings)
+		{
+			System.out.println(f.getFollower().getUsername());
+		}
+	}
 }
