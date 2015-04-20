@@ -14,7 +14,8 @@
 <%
 		UserDAO dao = new UserDAO();
 		FollowingDAO fdao = new FollowingDAO();
-
+		AdminDAO adao = new AdminDAO();
+		
 		UserLog check = new UserLog();
 		String action = request.getParameter("action");
 		String username = request.getParameter("username");
@@ -33,7 +34,15 @@
 				if (username == "" || password == "")
 					out.println("Please enter account and password.");
 				else if (check.Login(request, response, username, password))
-					response.sendRedirect("UserProfile.jsp" + "?name=" + name);
+				{
+					if (dao.read(username).getFrozen() == 1)
+					{
+						session.removeAttribute("User");
+						%><p style="font-size:300%;color:red">You are frozen!!!(<%=username %>)</p> <%
+					}
+					else
+						response.sendRedirect("UserProfile.jsp" + "?name=" + name);
+				}
 				else
 					out.println("Username and Password are not matched.");
 			}
@@ -79,12 +88,22 @@
 			else {
 		%>
 		<div id="logout">
-			<strong>Hello <%=user.getNickname() %>!
+			<strong> <a href="UserProfile.jsp?name=<%=user.getUsername() %>">Hello <%=user.getNickname() %>!</a>
 			</strong>
 			<form action="UserProfile.jsp?name=<%=name%>">
 				<button type="submit" name="action" value="logout">Log Out</button>
 				<input type="hidden" name="name" value="<%=name %>" style="display:none"/>
 			</form>
+			<button><a href="UserHomepage.jsp">Homepage</a></button>
+			<%
+			if (adao.read(user.getUsername()) != null)
+			{
+				%>
+				<a href="ManageUser.jsp">Manage User</a>
+				<%
+			}
+			
+			%>
 		</div>
 		<%
 			}
@@ -93,7 +112,17 @@
 	
 <!-- ------------------ -->		
 
-	<h1><%=curUser.getNickname() %></h1>		
+	<h1><%=curUser.getNickname() %></h1>	
+	
+	<%
+	if (curUser.getFrozen() == 1)
+	{
+		%><p style="color:red; font:200">This user is Frozen!!!</p><%
+	}
+	else
+	{
+	%>
+		
 	<div>
 		<img alt="Avatar" style="width:300;height:300">
 	</div>
@@ -193,21 +222,19 @@
 	</div>
 	<div>
 	<% 
-			if (user != null && user.getUsername().equals(curUser.getUsername()))
-			{
-			%>
-				<p>Users I follow</p>
-			<%
-			}
-			else
-			{
-			%>
-				<p>Users <%=curUser.getNickname()%> follow</p>				
-			<%
-			}
-	%>
-		
-	<%
+		if (user != null && user.getUsername().equals(curUser.getUsername()))
+		{
+		%>
+			<p>Users I follow</p>
+		<%
+		}
+		else
+		{
+		%>
+			<p>Users <%=curUser.getNickname()%> follow</p>				
+		<%
+		}
+	
 	    List<Following> followeeList = curUser.getFollowees();
 		for (Following f : followeeList)
 		{
@@ -253,5 +280,6 @@
 	%>
 	
 	</div>
+	<%}%>
 </body>
 </html>

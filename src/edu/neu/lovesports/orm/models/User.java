@@ -3,6 +3,7 @@ package edu.neu.lovesports.orm.models;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -15,6 +16,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private Integer frozen;
 	
 	@OneToMany(mappedBy = "editor")
 	private List<Category> categories;
@@ -35,10 +37,10 @@ public class User {
 	private List<Collection> collections;
 	
 	
-	@OneToMany(mappedBy = "follower")
+	@OneToMany(mappedBy = "follower", fetch=FetchType.EAGER)
 	private List<Following> followees;
 	
-	@OneToMany(mappedBy = "followee")
+	@OneToMany(mappedBy = "followee", fetch=FetchType.EAGER)
 	private List<Following> followers;
 	
 	public String getUsername() {
@@ -78,6 +80,12 @@ public class User {
 		this.email = email;
 	}
 
+	public Integer getFrozen() {
+		return frozen;
+	}
+	public void setFrozen(Integer frozen) {
+		this.frozen = frozen;
+	}
 	public List<Category> getCategories() {
 		return categories;
 	}
