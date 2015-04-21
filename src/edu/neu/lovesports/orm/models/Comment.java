@@ -1,5 +1,7 @@
 package edu.neu.lovesports.orm.models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Comment {
@@ -16,6 +20,8 @@ public class Comment {
 	private Integer id;
 	private String title;
 	private String text;
+	@Temporal(TemporalType.DATE)
+	private Date createDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "username")
@@ -49,6 +55,14 @@ public class Comment {
 		this.text = text;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -65,11 +79,13 @@ public class Comment {
 		this.blog = blog;
 	}
 
-	public Comment(Integer id, String title, String text, User user, Blog blog) {
+	public Comment(Integer id, String title, String text, Date createDate,
+			User user, Blog blog) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.text = text;
+		this.createDate = createDate;
 		this.user = user;
 		this.blog = blog;
 	}

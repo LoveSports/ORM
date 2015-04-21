@@ -14,7 +14,20 @@ public class StampDAO {
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("LoveSportsORM");
 	EntityManager em = factory.createEntityManager();
 	
-	//crud
+	//read
+	public Stamp read(Blog blog, User user){
+		int blogId = blog.getId();
+		String username = user.getUsername();
+		StampId id = new StampId(blogId, username);
+		if(em.find(Stamp.class, id) != null){
+			Stamp stamp = em.find(Stamp.class, id);
+			em.refresh(stamp);
+			return stamp;
+		}
+		else
+			return null;
+	}
+	
 	//create
 	public Stamp create(Blog blog, User user){
 		Stamp stamp = new Stamp(blog, user);

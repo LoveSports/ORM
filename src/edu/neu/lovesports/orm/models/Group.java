@@ -1,5 +1,6 @@
 package edu.neu.lovesports.orm.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "\"GROUP\"")
@@ -17,6 +20,8 @@ public class Group {
 	@Id
 	private String name;
 	private String description;
+	@Temporal(TemporalType.DATE)
+	private Date createDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "username")
@@ -41,6 +46,14 @@ public class Group {
 		this.description = description;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -57,10 +70,11 @@ public class Group {
 		this.blogs = blogs;
 	}
 
-	public Group(String name, String description, User user) {
+	public Group(String name, String description, Date createDate, User user) {
 		super();
 		this.name = name;
 		this.description = description;
+		this.createDate = createDate;
 		this.user = user;
 	}
 

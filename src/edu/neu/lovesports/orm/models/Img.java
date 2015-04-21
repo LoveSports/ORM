@@ -18,10 +18,6 @@ public class Img {
 	private String url;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "blogId")
-	private Blog blog;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId")
 	private Category category;
 
@@ -49,14 +45,6 @@ public class Img {
 		this.url = url;
 	}
 
-	public Blog getBlog() {
-		return blog;
-	}
-
-	public void setBlog(Blog blog) {
-		this.blog = blog;
-	}
-
 	public Category getCategory() {
 		return category;
 	}
@@ -65,12 +53,11 @@ public class Img {
 		this.category = category;
 	}
 
-	public Img(Integer id, String name, String url, Blog blog, Category category) {
+	public Img(Integer id, String name, String url, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.url = url;
-		this.blog = blog;
 		this.category = category;
 	}
 

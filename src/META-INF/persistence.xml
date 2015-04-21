@@ -7,7 +7,6 @@
 		<class>edu.neu.lovesports.orm.models.User</class> 
 		<class>edu.neu.lovesports.orm.models.Group</class> 
 		<class>edu.neu.lovesports.orm.models.Blog</class>
-		<class>edu.neu.lovesports.orm.models.Text</class>
 		<class>edu.neu.lovesports.orm.models.Subscription</class>
 		<class>edu.neu.lovesports.orm.models.SubscriptionId</class>
 		<class>edu.neu.lovesports.orm.models.Img</class>

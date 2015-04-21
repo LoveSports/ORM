@@ -272,7 +272,7 @@
 			
 			%>
 				<ul>
-					<li><a href="group.jsp?group=<%=g.getName() %>"><%=g.getName()%></a></li>
+					<li><a href="Group.jsp?groupName=<%=g.getName() %>"><%=g.getName()%></a></li>
 				</ul>
 			<%
 		}

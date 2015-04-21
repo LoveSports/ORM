@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import edu.neu.lovesports.orm.models.Blog;
+import edu.neu.lovesports.orm.models.User;
 
 public class BlogDAO {
 	
@@ -20,12 +21,18 @@ public class BlogDAO {
 		em.getTransaction().begin();
 		em.persist(blog);
 		em.getTransaction().commit();
-		return blog;
+		UserDAO dao = new UserDAO();
+		User user = dao.read(blog.getUser().getUsername());
+		int size = user.getBlogs().size();
+		Blog newBlog = user.getBlogs().get(size-1);
+		return newBlog;
 	}
 	
 	//read
 	public Blog read(int id){
-		return em.find(Blog.class, id);
+		Blog blog = em.find(Blog.class, id);
+		em.refresh(blog);
+		return blog;
 	}
 	
 	//read

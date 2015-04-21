@@ -25,7 +25,9 @@ public class GroupDAO {
 	
 	//read
 	public Group read(String name){
-		return em.find(Group.class, name);
+		Group group = em.find(Group.class, name);
+		em.refresh(group);
+		return group;
 	}
 	
 	//read

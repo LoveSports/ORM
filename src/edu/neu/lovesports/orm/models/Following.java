@@ -12,12 +12,12 @@ import javax.persistence.ManyToOne;
 public class Following {
 
 	@Id
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "follower")
 	private User follower;
 	
 	@Id
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "followee")
 	private User followee;
 
@@ -46,27 +46,4 @@ public class Following {
 	public Following() {
 		super();
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Following other = (Following) obj;
-		if (followee == null) {
-			if (other.followee != null)
-				return false;
-		} else if (!followee.equals(other.followee))
-			return false;
-		if (follower == null) {
-			if (other.follower != null)
-				return false;
-		} else if (!follower.equals(other.follower))
-			return false;
-		return true;
-	}
-	
 }

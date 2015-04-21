@@ -28,7 +28,7 @@ public class CommentDAO {
 		return em.find(Comment.class, id);
 	}
 	
-	//read
+	//readAll
 	@SuppressWarnings("unchecked")
 	public List<Comment> readAll(){
 		Query query = em.createQuery("select comment from Comment comment");

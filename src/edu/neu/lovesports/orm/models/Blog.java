@@ -1,5 +1,6 @@
 package edu.neu.lovesports.orm.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Blog {
@@ -15,6 +18,11 @@ public class Blog {
 	@Id
 	private Integer id;
 	private String title;
+	private String text;
+	@Temporal(TemporalType.DATE)
+	private Date createDate;
+	@Temporal(TemporalType.DATE)
+	private Date modifyDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "username")
@@ -25,16 +33,10 @@ public class Blog {
 	private Group group;
 	
 	@OneToMany(mappedBy = "blog")
-	private List<Text> texts;
-	
-	@OneToMany(mappedBy = "blog")
 	private List<BlogReference> blogRefs;
 	
 	@OneToMany(mappedBy = "blog")
 	private List<Comment> comments;
-	
-	@OneToMany(mappedBy = "blog")
-	private List<Img> Imgs;
 	
 	@OneToMany(mappedBy = "blog")
 	private List<Stamp> stamps;
@@ -58,6 +60,30 @@ public class Blog {
 		this.title = title;
 	}
 
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -72,14 +98,6 @@ public class Blog {
 
 	public void setGroup(Group group) {
 		this.group = group;
-	}
-
-	public List<Text> getTexts() {
-		return texts;
-	}
-
-	public void setTexts(List<Text> texts) {
-		this.texts = texts;
 	}
 
 	public List<BlogReference> getBlogRefs() {
@@ -98,14 +116,6 @@ public class Blog {
 		this.comments = comments;
 	}
 
-	public List<Img> getImgs() {
-		return Imgs;
-	}
-
-	public void setImgs(List<Img> imgs) {
-		Imgs = imgs;
-	}
-
 	public List<Collection> getCollections() {
 		return collections;
 	}
@@ -122,10 +132,14 @@ public class Blog {
 		this.stamps = stamps;
 	}
 
-	public Blog(Integer id, String title, User user, Group group) {
+	public Blog(Integer id, String title, String text, Date createDate,
+			Date modifyDate, User user, Group group) {
 		super();
 		this.id = id;
 		this.title = title;
+		this.text = text;
+		this.createDate = createDate;
+		this.modifyDate = modifyDate;
 		this.user = user;
 		this.group = group;
 	}
