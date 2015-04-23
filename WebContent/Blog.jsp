@@ -20,7 +20,23 @@
 				window.location.href = href;
 			}
 		});
+		
+		$('#commentButton').click(function(){
+			$("#comment").slideToggle("slow");
+		});
+		
+		$('#skipToComment').click(function(){
+			window.location.hash = null;
+			window.location.hash = '#comment';
+			$("#comment").slideDown("slow");
+		});
 	});
+	function reply(seq){
+		target = document.getElementById('commentTitle');
+		target.setAttribute('value', seq);
+		window.location.hash = null;
+		window.location.hash = '#comment';
+	}
 	
 </script>
 </head>
@@ -61,7 +77,7 @@
 		User user = (User) session.getAttribute("User");
 	%>
 	<div id="top">
-	<a>Homepage</a>
+	<a href="/LoveSportsORM/Homepage.jsp">Homepage</a>
 	<a href="/LoveSportsORM/Group.jsp?groupName=Forum">Forum</a>
 		<%
 			if (user == null) {
@@ -80,7 +96,7 @@
 			else {
 				%>
 				<div id="login">
-					<strong>Hello <%=user.getNickname()%>!</strong>
+					<strong><a href="/LoveSportsORM/UserProfile.jsp?name=<%=user.getUsername()%>">Hello <%=user.getNickname()%>!</a></strong>
 					<form action="Blog.jsp">
 						<button type="submit" name="action" value="logout">Log Out</button>
 						<input type="hidden" name="blogId" value="<%=blogId%>" />
@@ -143,7 +159,7 @@
 				}
 			}
 			%>
-			<p><a href="#comment"><button>Skip to Comment</button></a></p>
+			<p><button id="skipToComment">Skip to Comment</button></a></p>
 			<p id="text">
 			<textarea id="loadText" style="display:none"><%=blog.getText() %></textarea>
 			</p>
@@ -159,13 +175,13 @@
 			<%
 			List<Comment> comments = bdao.read(Integer.parseInt(blogId)).getComments();
 			%>
-			<button><%=comments.size()%>COMMENTS</button>
+			<button id="commentButton"><%=comments.size()%>COMMENTS</button>
 		</div>
-		<div id="comment">
+		<div id="comment" style="display:none">
 			<div>
 				<form action="Blog.jsp">
 					<input type="hidden" name="blogId" value="<%=blogId%>" /> 
-					<input type="text" name="title" placeholder="Enter title" /><br /> 
+					<input id="commentTitle" type="text" name="title" placeholder="Enter title" /><br /> 
 					<input type="text" name="text" required="required" placeholder="Enter comment" /><br />
 					<button name="action" value="postComment">Submit</button>
 					<button type="reset">Reset</button>
@@ -187,13 +203,14 @@
 					%>
 					<li>
 						<div>
-							<h3>Title: <%=comment.getTitle()%></h3> 
+							<strong id="seq"># <%=1+i+n %></strong>
+							<h3>Title: <%=comment.getTitle()%></h3>
 							<i>Author: <a href="/LoveSportsORM/UserProfile.jsp?name=<%=comment.getUser().getUsername() %>">
 							<%=comment.getUser().getNickname()%></a></i><br />
 							<tt><%=comment.getCreateDate() %></tt>
 							<p><%=comment.getText()%></p>
+							<button onclick="reply('Reply to #<%=1+i+n %>:')">Reply</button>
 							<form action="Blog.jsp">
-								<button>Reply</button>
 								<%
 								if(user != null){
 									if(comment.getUser().getUsername().equals(user.getUsername())){

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
-	import="edu.neu.lovesports.orm.dao.*, java.util.Date, java.util.List, edu.neu.lovesports.orm.method.*, edu.neu.lovesports.orm.models.*, java.sql.*, javax.script.*"%>
+	import="edu.neu.lovesports.orm.dao.*, java.util.Date, java.util.List, edu.neu.lovesports.orm.method.*, edu.neu.lovesports.orm.models.*, java.sql.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -82,11 +82,10 @@
 		}
 	%>
 	<div id="top">
-		<a>Homepage</a>
+		<a href="/LoveSportsORM/Homepage.jsp">Homepage</a>
 		<a href="/LoveSportsORM/Group.jsp?groupName=Forum">Forum</a>
 		<div id="login">
-			<strong>Hello <%=user.getNickname()%>!
-			</strong>
+			<strong><a href="/LoveSportsORM/UserProfile.jsp?name=<%=user.getUsername()%>">Hello <%=user.getNickname()%>!</a></strong>
 			<form action="BlogEditor.jsp">
 				<button type="submit" name="action" value="logout">Log Out</button>
 				<%

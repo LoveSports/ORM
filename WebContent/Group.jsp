@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
-	import="edu.neu.lovesports.orm.dao.*, java.util.*, edu.neu.lovesports.orm.method.*, edu.neu.lovesports.orm.models.*, java.sql.*, javax.script.*"%>
+	import="edu.neu.lovesports.orm.dao.*, java.util.*, edu.neu.lovesports.orm.method.*, edu.neu.lovesports.orm.models.*, java.sql.*,
+	java.util.regex.Matcher, java.util.regex.Pattern"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,7 +46,7 @@
 		User user = (User) session.getAttribute("User");
 	%>
 	<div id="top">
-		<a>Homepage</a>
+		<a href="/LoveSportsORM/Homepage.jsp">Homepage</a>
 		<a href="/LoveSportsORM/Group.jsp?groupName=Forum">Forum</a>
 		<%
 			if (user == null) {
@@ -64,8 +65,7 @@
 			else {
 		%>
 		<div id="login">
-			<strong>Hello <%=user.getNickname() %>!
-			</strong>
+			<strong><a href="/LoveSportsORM/UserProfile.jsp?name=<%=user.getUsername()%>">Hello <%=user.getNickname()%>!</a></strong>
 			<form action="Group.jsp">
 				<button type="submit" name="action" value="logout">Log Out</button>
 				<input type="hidden" name="groupName" value="<%=groupName%>"/>
@@ -80,10 +80,9 @@
 		if(user != null){
 			if("createBlog".equals(action))
 				response.sendRedirect("/LoveSportsORM/BlogEditor.jsp?groupName="+groupName);
+			else if("createGroup".equals(action))
+				response.sendRedirect("/LoveSportsORM/CreateGroup.jsp");
 		}
-		
-		if(!"createBlog".equals(action))
-			response.sendRedirect("/LoveSportsORM/Group.jsp?groupName="+groupName);
 	}
 	
 	%>
@@ -94,6 +93,7 @@
 		</form>
 		<h1>Welcome to <%=groupName %></h1>
 		<form action="Group.jsp">
+			<button name="action" value="createGroup">Create your group</button>
 			<button name="action" value="createBlog">New Blog</button>
 			<input type="hidden" name="groupName" value="<%=groupName%>"/>
 		</form>
@@ -109,6 +109,18 @@
 				int j = blogs.size() - i - n;
 				if(blogs.size() != 0){
 				Blog blog = blogs.get(j);
+				Pattern pattern = Pattern.compile("<img src=.*?>");
+				String content = blog.getText();//.split("<img.*?")[0];
+				String[] textList = content.split("<img.*?>");
+				String text = null;
+				if(textList.length > 0){
+					text = textList[0];
+				}
+				List<String> img = new ArrayList<String>();
+				Matcher matcher = pattern.matcher(blog.getText());
+				while(matcher.find()){
+					img.add(matcher.group());
+				}
 			%>
 			<li>
 				<div>
@@ -118,15 +130,18 @@
 					<i> <a
 						href="/LoveSportsORM/UserProfile.jsp?name=<%=blog.getUser().getUsername()%>"><%=blog.getUser().getNickname()%></a>
 					</i>
-					<p id="text<%=i %>">
-						<textarea id="loadText<%=i %>" style="display:none"><%=blog.getText() %></textarea>
-						<script>
-						var textId = "#text<%=i %>";
-						var loadTextId = "#loadText<%=i %>";
-						var text = $(loadTextId).val();
-						$(textId).append(text);
-						</script>
+					<p>
+					<%
+					if(text != null){
+						out.println(text);
+					}
+					%>
 					</p>
+					<%
+					if(img.size() > 0){
+						out.println(img.get(0));
+					}
+					%>
 				</div>
 			</li>
 

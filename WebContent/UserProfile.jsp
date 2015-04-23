@@ -71,6 +71,8 @@
 		
 	%>
 	<div id="top">
+		<a href="/LoveSportsORM/Homepage.jsp">Homepage</a>
+		<a href="/LoveSportsORM/Group.jsp?groupName=Forum">Forum</a>
 		<%
 			if (user == null) {
 		%>
@@ -94,7 +96,6 @@
 				<button type="submit" name="action" value="logout">Log Out</button>
 				<input type="hidden" name="name" value="<%=name %>" style="display:none"/>
 			</form>
-			<button><a href="UserHomepage.jsp">Homepage</a></button>
 			<%
 			if (adao.read(user.getUsername()) != null)
 			{

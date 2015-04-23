@@ -65,6 +65,8 @@
 		
 	%>
 	<div id="top">
+		<a href="/LoveSportsORM/Homepage.jsp">Homepage</a>
+		<a href="/LoveSportsORM/Group.jsp?groupName=Forum">Forum</a>
 		<%
 			if (user == null) {
 		%>
