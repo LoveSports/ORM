@@ -66,7 +66,7 @@
         		<p style="color:red">Nickname is required!</p>
         		<%
         	}
-        	else if (!matcher1.matches())
+        	else if (email != "" && !matcher1.matches())
         	{
         		%>
         		<p style="color:red">Invalid email!</p>
@@ -81,7 +81,7 @@
 	        	<%
 	        	UserLog check = new UserLog();
 	        	check.Login(request, response, username, password);
-	        	String str = "/LoveSports/UserProfile.jsp?name=CUR_USERNAME";
+	        	String str = "/LoveSportsORM/UserProfile.jsp?name=CUR_USERNAME";
 	        	String redirect = str.replace("CUR_USERNAME", username);
 	        	response.sendRedirect(redirect);
         	}

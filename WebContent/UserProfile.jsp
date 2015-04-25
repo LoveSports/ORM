@@ -101,6 +101,7 @@
 			{
 				%>
 				<a href="ManageUser.jsp">Manage User</a>
+				<a href="ManageBlog.jsp">Manage Blog</a>
 				<%
 			}
 			
@@ -281,6 +282,52 @@
 	%>
 	
 	</div>
+	<div>
+		Blogs I wrote
+		<br/>
+		<%
+		List<Blog> blogList = curUser.getBlogs();
+		for (Blog b : blogList)
+		{
+			if (b.getPresent() == 1)
+			{
+		%>
+			[<a href="Group.jsp?groupName=<%= b.getGroup().getName()%>"><%=b.getGroup().getName() %></a>]
+			<a href="Blog.jsp?blogId=<%= b.getId()%>"><%=b.getTitle()%></a><br>
+		<%
+			}
+			else
+			{
+				if (user != null && user.getUsername().equals(curUser.getUsername()))
+				{
+		%>
+				[<a style="color:red "href="Group.jsp?groupName=<%= b.getGroup().getName()%>"><%=b.getGroup().getName() %></a>]
+				<a style="color:red" href="Blog.jsp?blogId=<%= b.getId()%>"><%=b.getTitle()%> (Blocked)</a><br>
+				
+		<%
+				}
+			}
+		}
+		%>
+	</div>
+	<div>
+		Blogs I collected
+		<br/>
+		<%
+		List<edu.neu.lovesports.orm.models.Collection> clcList = curUser.getCollections();
+		for(edu.neu.lovesports.orm.models.Collection c : clcList)
+		{
+			if (c.getBlog().getPresent() == 1)
+			{
+			%>
+			[<a href="Group.jsp?groupName=<%= c.getBlog().getGroup()%>"><%=c.getBlog().getGroup().getName() %></a>]
+			<a href="Blog.jsp?blogId=<%= c.getBlog().getId()%>"><%=c.getBlog().getTitle()%></a><br>
+			<%
+			}
+		}
+		%>
+	</div>
+	
 	<%}%>
 </body>
 </html>

@@ -14,6 +14,8 @@
 		UserDAO dao = new UserDAO();
 		FollowingDAO fdao = new FollowingDAO();
 		AdminDAO adao = new AdminDAO();
+		GroupDAO gdao = new GroupDAO();
+		BlogDAO bdao = new BlogDAO();
 		
 		UserLog check = new UserLog();
 		String action = request.getParameter("action");
@@ -21,6 +23,8 @@
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
 		String follow = request.getParameter("follow");
+		String group = request.getParameter("group");
+		String strBId = request.getParameter("blogId");
 		
 		if (action != null) {
 
@@ -37,20 +41,24 @@
 				else
 					out.println("Username and Password are not matched.");
 			}
-			else if ("freeze".equals(action))
+			else if ("block".equals(action))
 			{
-				User u = dao.read(name);
-				u.setFrozen(1);
-				dao.update(u);
-				response.sendRedirect("ManageUser.jsp");
-				
+				Blog b = bdao.read(Integer.parseInt(strBId));
+				b.setPresent(0);
+				bdao.update(b);
+				//response.sendRedirect("ManageBlog.jsp");
 			}
-			else if ("activate".equals(action))
+			else if ("unblock".equals(action))
 			{
-				User u = dao.read(name);
-				u.setFrozen(0);
-				dao.update(u);
-				response.sendRedirect("ManageUser.jsp");
+				Blog b = bdao.read(Integer.parseInt(strBId));
+				b.setPresent(1);
+				bdao.update(b);
+				//response.sendRedirect("ManageBlog.jsp");
+			}
+			else if ("delete".equals(action))
+			{
+				bdao.delete(Integer.parseInt(strBId));
+				//response.sendRedirect("ManageBlog.jsp");
 			}
 		}
 		
@@ -103,65 +111,78 @@
 	
 <!-- ------------------- -->
 <%
-	List<User> userList = dao.readAll();
+	List<Group> groupList = gdao.readAll();
 %>
 <div>
-	<form action="ManageUser.jsp">
+<form>
+<table>
+	<tr>
+		<%
+		for (Group g : groupList)
+		{
+			%><td><a href="ManageBlog.jsp?group=<%= g.getName()%>"><%= g.getName()%></a></td><%
+		}
+		%>
+	</tr>
+</table>
+</form>
+</div>
+
+
+<div>
+	<form action="ManageBlog.jsp">
     <table class="table table-striped">
+    <tr><%= group%></tr>
         <thead>
             <tr>
-                <th>Username</th>
-                <th>Type</th>
+                <th>Blog</th>
+                <th>Author</th>
                 <th>Status</th>
                 <th>Manage</th>
             </tr>
         </thead>
         <tbody>
     <%
-    for(User u : userList)
+    if (group != null)
     {
-    	%>
-    	    <tr>
-    	        <td><a href="UserProfile.jsp?name=<%= u.getUsername()%>"><%=u.getUsername() %></a></td>
- 				<%
- 				if (adao.read(u.getUsername()) == null)
- 				{
- 					%>
- 				<td>User</td>
- 					<%	
- 				}
- 				else
- 				{
- 					%>
- 				<td>Admin</td>
- 					<%
- 				}
- 				if (u.getFrozen() == 0)
- 				{
- 				%>   	  
-    	        <td>Active</td>
-    	        <td>
-    	        <%
-    	        if(adao.read(u.getUsername()) == null) {
-    	        %>
-    	        	<a class="btn btn-danger"  href="ManageUser.jsp?action=freeze&name=<%=u.getUsername()%>">Freeze</a>
-    	        </td>
-    	    </tr>
-    	    <%
-    	        }
- 				}
- 				else
- 				{
- 				%>
- 				<td>Frozen</td>
-    	        <td>
-    	        	<a class="btn btn-danger"  href="ManageUser.jsp?action=activate&name=<%=u.getUsername()%>">Activate</a>
-    	        </td>
-    	    </tr>
-    	    <%
- 				}
+    	Group grp = gdao.read(group);
+    	List<Blog> blogList = grp.getBlogs();
+	    for(Blog b : blogList)
+	    {
+	    	%>
+	    	    <tr>
+	    	        <td><a href="Blog.jsp?blogId=<%= b.getId()%>&group=<%=group %>"><%=b.getTitle() %></a></td>
+	    	        <td><a href="UserProfile.jsp?name=<%=b.getUser().getUsername() %>"><%=b.getUser().getUsername() %></a>
+	 				<%
+	 				if (b.getPresent() == 1)
+	 				{
+	 				%>   	  
+	    	        <td>Present</td>
+	    	        <td>
+	    	        	<a class="btn btn-danger"  href="ManageBlog.jsp?action=block&blogId=<%=b.getId()%>&group=<%=group %>">Block</a>
+	    	        </td>
+	    	        <td>
+	    	        	<a class="btn btn-danger"  href="ManageBlog.jsp?action=delete&blogId=<%=b.getId()%>&group=<%=group %>">Delete</a>
+	    	        </td>
+	    	    </tr>
+	    	    <%
+	    	        }
+	 				else
+	 				{
+	 				%>
+	 				<td>Blocked</td>
+	    	        <td>
+	    	        	<a class="btn btn-danger"  href="ManageBlog.jsp?action=unblock&blogId=<%=b.getId()%>&group=<%=group %>">Unblock</a>
+	    	        </td>
+	    	        <td>
+	    	        	<a class="btn btn-danger"  href="ManageBlog.jsp?action=delete&blogId=<%=b.getId()%>&group=<%=group %>">Delete</a>
+	    	        </td>
+	    	    </tr>
+	    	    <%
+	 				}
+	    }
     }
-    %>
+	 %>
         </tbody>
     </table>
     </form>

@@ -19,6 +19,8 @@ public class Blog {
 	private Integer id;
 	private String title;
 	private String text;
+	private int present;
+	
 	@Temporal(TemporalType.DATE)
 	private Date createDate;
 	@Temporal(TemporalType.DATE)
@@ -132,6 +134,14 @@ public class Blog {
 		this.stamps = stamps;
 	}
 
+	public int getPresent() {
+		return present;
+	}
+
+	public void setPresent(int present) {
+		this.present = present;
+	}
+
 	public Blog(Integer id, String title, String text, Date createDate,
 			Date modifyDate, User user, Group group) {
 		super();
@@ -142,6 +152,7 @@ public class Blog {
 		this.modifyDate = modifyDate;
 		this.user = user;
 		this.group = group;
+		this.present = 1;
 	}
 
 	public Blog() {
