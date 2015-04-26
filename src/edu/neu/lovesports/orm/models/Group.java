@@ -20,7 +20,7 @@ public class Group {
 	@Id
 	private String name;
 	private String description;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

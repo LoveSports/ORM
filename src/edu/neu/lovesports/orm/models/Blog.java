@@ -20,10 +20,9 @@ public class Blog {
 	private String title;
 	private String text;
 	private int present;
-	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -85,6 +84,14 @@ public class Blog {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+	
+	public int getPresent() {
+		return present;
+	}
+
+	public void setPresent(int present) {
+		this.present = present;
+	}
 
 	public User getUser() {
 		return user;
@@ -132,14 +139,6 @@ public class Blog {
 
 	public void setStamps(List<Stamp> stamps) {
 		this.stamps = stamps;
-	}
-
-	public int getPresent() {
-		return present;
-	}
-
-	public void setPresent(int present) {
-		this.present = present;
 	}
 
 	public Blog(Integer id, String title, String text, Date createDate,

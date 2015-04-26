@@ -9,6 +9,8 @@ import javax.persistence.Query;
 
 import edu.neu.lovesports.orm.models.Blog;
 import edu.neu.lovesports.orm.models.Collection;
+import edu.neu.lovesports.orm.models.Stamp;
+import edu.neu.lovesports.orm.models.StampId;
 import edu.neu.lovesports.orm.models.User;
 
 public class CollectionDAO {
@@ -26,8 +28,17 @@ public class CollectionDAO {
 	}
 
 	// read
-	public Collection read(int id){
-		return em.find(Collection.class, id);
+	public Collection read(Blog blog, User user) {
+		List<Collection> collections = user.getCollections();
+		Collection collection = null;
+		for (Collection c : collections) {
+			if (c.getBlog().getId().compareTo(blog.getId()) == 0) {
+				collection = c;
+				break;
+			}
+		}
+		return collection;
+
 	}
 
 	// readAll
@@ -49,11 +60,12 @@ public class CollectionDAO {
 
 	// delete
 	public void delete(User user, Blog blog) {
-		Query query = em.createQuery("select collection from Collection collection where collection.user = :user and collection.blog = :blog");
+		Query query = em
+				.createQuery("select collection from Collection collection where collection.user = :user and collection.blog = :blog");
 		query.setParameter("user", user);
 		query.setParameter("blog", blog);
 		@SuppressWarnings("unchecked")
-		List<Collection> collections = (List<Collection>)query.getResultList();
+		List<Collection> collections = (List<Collection>) query.getResultList();
 		em.getTransaction().begin();
 		for (Collection collection : collections)
 			em.remove(collection);

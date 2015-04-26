@@ -42,6 +42,12 @@ public class User {
 	@OneToMany(mappedBy = "followee")
 	private List<Following> followers;
 	
+	@OneToMany(mappedBy="sender")
+	private List<Msg> sendMsgs;
+	
+	@OneToMany(mappedBy="receiver")
+	private List<Msg> rcvMsgs;
+	
 	public String getUsername() {
 		return username; 
 	}
@@ -132,6 +138,18 @@ public class User {
 	}
 	public void setFollowers(List<Following> followers) {
 		this.followers = followers;
+	}
+	public List<Msg> getSendMsgs() {
+		return sendMsgs;
+	}
+	public void setSendMsgs(List<Msg> sendMsgs) {
+		this.sendMsgs = sendMsgs;
+	}
+	public List<Msg> getRcvMsgs() {
+		return rcvMsgs;
+	}
+	public void setRcvMsgs(List<Msg> rcvMsgs) {
+		this.rcvMsgs = rcvMsgs;
 	}
 	public User(String username, String password, String nickname, String firstName,
 			String lastName, String email) {
