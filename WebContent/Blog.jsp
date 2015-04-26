@@ -196,6 +196,7 @@
 				<button id="skipToComment" class="btn btn-create">Skip to Comment</button>
 			</div>
 			<%
+			if(user != null){
 			if(!user.getUsername().equals(blog.getUser().getUsername())){
 			%>
 			<form action="Blog.jsp">
@@ -223,6 +224,7 @@
 			</form>
 
 			<%
+			}
 			}
 			%>
 			</div>

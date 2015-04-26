@@ -45,7 +45,7 @@ public class CollectionDAO {
 	@SuppressWarnings("unchecked")
 	public List<Collection> readAll() {
 		Query query = em
-				.createQuery("select collectionscription from Collection collectionscription");
+				.createQuery("select collection from Collection collection");
 		return (List<Collection>) query.getResultList();
 	}
 

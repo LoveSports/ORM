@@ -197,7 +197,7 @@
 		<p class="page">
 			Page
 			<%
-			int pageNum = (int) ((blogs.size() - block)/ 10) + 1;
+			int pageNum = (int) ((blogs.size()/ 10) + 1);
 			int pageNow = n / 10 + 1;
 			int i;
 			for (i = 1; i <= pageNum; i++) {

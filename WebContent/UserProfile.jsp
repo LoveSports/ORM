@@ -27,7 +27,6 @@
 		String follow = request.getParameter("follow");
 
 		if (action != null) {
-
 			if ("signup".equals(action))
 				response.sendRedirect("UserSignUp.jsp");
 
@@ -128,9 +127,9 @@
 		<div class="jumbotron">
 			<h1><%=curUser.getNickname()%></h1>
 			<div class="row">
-				<div class="col-lg-1">
+<!-- 				<div class="col-lg-1">
 					<img alt="Avatar" style="width: 300; height: 300;">
-				</div>
+				</div> -->
 				<div class="col-lg-1">
 					<form action="UserProfile.jsp">
 						<%
@@ -142,14 +141,14 @@
 										.getUsername())) != null) {
 						%>
 						<button type="submit" name="action" value="unfollow"
-							class="btn btn-create">Unfollow</button>
+							class="btn">Unfollow</button>
 						<input type="hidden" name="name" value="<%=name%>"
 							style="display: none" /> <input type="hidden" name="username"
 							value="<%=user.getUsername()%>" style="display: none" />
 						<%
 							} else {
 						%>
-						<button type="submit" name="action" value="follow">Follow</button>
+						<button type="submit" name="action" value="follow" class="btn btn-create">Follow</button>
 						<input type="hidden" name="name" value="<%=name%>"
 							style="display: none" /> <input type="hidden" name="username"
 							value="<%=user.getUsername()%>" style="display: none" />
@@ -200,7 +199,6 @@
 				href="ChangePassword.jsp?name=<%=curUser.getUsername()%>">Change
 				Password</a>
 			<%
-				}
 				if (adao.read(user.getUsername()) != null) {
 			%>
 			<a href="ManageUser.jsp"><img
@@ -208,6 +206,7 @@
 			<a href="ManageBlog.jsp"><img
 				src="Img/glyphicons-147-folder-minus.png" style="padding-left:5px"></a>
 			<%
+				}
 				}
 			%>
 		</div>
@@ -305,9 +304,6 @@
 
 		</div>
 		</div>
-		<%
-			}
-		%>
 		</div>
 		<div class="col-lg-4">
 		<div class="profile-frame">
@@ -369,6 +365,9 @@
 		</ul>
 	</div>
 	</div>
+	<%
+	}
+	%>
 	</div>
 </body>
 </html>
