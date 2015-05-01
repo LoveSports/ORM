@@ -28,6 +28,14 @@ public class CommentDAO {
 		return em.find(Comment.class, id);
 	}
 	
+	//readByNews
+	@SuppressWarnings("unchecked")
+	public List<Comment> readByNews(String url){
+		Query query = em.createQuery("select comment from Comment comment where comment.news = :url");
+		query.setParameter("url", url);
+		return (List<Comment>)query.getResultList();
+	}
+	
 	//readAll
 	@SuppressWarnings("unchecked")
 	public List<Comment> readAll(){

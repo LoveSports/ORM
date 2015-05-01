@@ -25,7 +25,20 @@ public class CategoryDAO {
 	
 	//read
 	public Category read(int id){
-		return em.find(Category.class, id);
+		Category category = em.find(Category.class, id);
+		if(category != null)
+			em.refresh(category);
+		return category;
+	}
+	
+	//readByTitle
+	public Category readByTitle(String title){
+		Query query = em.createQuery("select category from Category category where category.title = :title");
+		query.setParameter("title", title);
+		Category category = null;
+		if(query.getResultList().size() > 0)
+			category = (Category)query.getResultList().get(0);
+		return category;
 	}
 	
 	//read

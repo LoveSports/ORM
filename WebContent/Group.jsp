@@ -258,6 +258,12 @@
 			%>
 		</p>
 	</div>
+		<div class="return_to_top">
+		<a href="#top"> <img
+			src="Img/icon-back-to-top.jpg"
+			width="50" height="50">
+		</a>
+	</div>
 
 </body>
 </html>

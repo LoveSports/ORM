@@ -125,7 +125,7 @@ public class Category {
 	}
 
 	public Category(Integer id, String title, String description,
-			Homepage homepage, User editor) {
+			Homepage homepage, User editor, String href) {
 		super();
 		this.id = id;
 		this.title = title;

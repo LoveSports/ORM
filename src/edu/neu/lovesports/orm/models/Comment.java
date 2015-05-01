@@ -22,6 +22,7 @@ public class Comment {
 	private String text;
 	@Temporal(TemporalType.DATE)
 	private Date createDate;
+	private String news;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "username")
@@ -79,13 +80,21 @@ public class Comment {
 		this.blog = blog;
 	}
 
-	public Comment(Integer id, String title, String text, Date createDate,
-			User user, Blog blog) {
+	public String getNews() {
+		return news;
+	}
+
+	public void setNews(String news) {
+		this.news = news;
+	}
+
+	public Comment(Integer id, String title, String text, Date createDate, User user, Blog blog, String news) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.text = text;
 		this.createDate = createDate;
+		this.news = news;
 		this.user = user;
 		this.blog = blog;
 	}

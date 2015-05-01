@@ -116,9 +116,10 @@
 
 .group-title {
 	background-image:
-		url(http://localhost:8080/LoveSportsORM/Img/Grey-background-for-site11.jpg);
+		url(http://localhost:8080/LoveSportsORM/Img/red-background-and-photo-high-resolution-download.jpg);
 	height: 350px;
 	width: 1140px;
+	color: #ffffff;
 }
 
 .page {
@@ -157,4 +158,52 @@ a {
 .list a{
 	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "Apple Gothic", sans-serif;
 	color: #3a1b43;
+}
+
+.return_to_top{
+    right:0;
+    position: fixed;
+    top: 80%;
+    bottom: 20%;
+    opacity: 0.2;
+}
+.return_to_top:hover {
+    opacity: 1;
+}
+
+.col-lg-6 img{
+    height: 100px;
+    width: 100px;
+}
+.col-lg-6{
+    border: 1px solid #f0f0f0;
+    -webkit-border-radius: 20;
+	-moz-border-radius: 20;
+	border-radius: 20px;
+	padding:20px;
+	background: #fafafa;
+}
+.col-lg-6:hover{
+    border-color: #3a1b43;
+}
+
+.table a{
+	font-size: 20px;
+}
+
+.table h1{
+	font-size: 40px
+}
+
+.showImg img{
+    height: 240px;
+    width: 360px;
+}
+
+.group-title-Basketball {
+	background-image:
+		url(http://localhost:8080/LoveSportsORM/Img/basketball_blk_rgb_png.png);
+	height: 350px;
+	width: 1140px;
+	color: #000000;
 }

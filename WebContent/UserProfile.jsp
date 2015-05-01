@@ -198,6 +198,7 @@
 				Info</a> <a class="btn"
 				href="ChangePassword.jsp?name=<%=curUser.getUsername()%>">Change
 				Password</a>
+			<a href="Subscription.jsp"><img src="Img/glyphicons-609-newspaper.png" style="padding-left:10px"></a>
 			<%
 				if (adao.read(user.getUsername()) != null) {
 			%>
@@ -365,9 +366,26 @@
 		</ul>
 	</div>
 	</div>
+	<div class="col-lg-4">
+		<div class="profile-frame">
+			<h3>Subscription</h3>
+			<%
+			List<Subscription> subs = curUser.getSubs();
+			for (Subscription sub : subs) {
+			%>
+			<ul class="list">
+				<li><a
+					href="Category.jsp?CatId=<%=sub.getCategory().getId()%>"><%=sub.getCategory().getTitle() %></a></li>
+			</ul>
+			<%
+				}
+			%>
+
+		</div>
 	<%
 	}
 	%>
 	</div>
+	
 </body>
 </html>

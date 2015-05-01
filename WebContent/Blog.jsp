@@ -415,8 +415,7 @@
 				} else if ("postComment".equals(action)) {
 					if (commentText != "") {
 						Date date = new Date();
-						Comment comment = new Comment(null, commentTitle,
-								commentText, date, user, blog);
+						Comment comment = new Comment(null, commentTitle, commentText, date, user, blog, null);
 						cmtdao.create(comment);
 					}
 				} else if ("removeComment".equals(action)
